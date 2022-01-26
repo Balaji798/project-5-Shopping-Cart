@@ -1,1 +1,2 @@
-# project-5-Shopping-Cart
+# radium
+Repository for backend cohort - Radium
