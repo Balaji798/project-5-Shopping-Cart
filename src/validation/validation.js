@@ -1,10 +1,12 @@
 const validator = require("email-validator");
 const userModel = require('../models/userModel');
 const productModel = require('../models/productModel');
-const cartModel = require('../models/cartModel.js');
+const cartModel = require('../models/cartModel');
 const orderModel = require('../models/orderModel');
 const ObjectId = require('mongoose').Types.ObjectId;
 
+// const {Validation} = require
+// Validation.bad_request
 
 //---------------------------------------Validation-Function-------------------------------------//
 
@@ -66,12 +68,14 @@ const isDecimal = function (value) {
 
 const checkUser = async (req, res, next) => {
     try {
-
+        let files = req.files
+        if (!files[0]) {
+            return res.status(400).send({ status: false, message: "Please Provide Profile Image" })
+        }
         let myData = req.body.data
         if (!myData) { // => added by me now 
             return res.status(400).send({ status: false, message: "Please provide data for successful registration" });
         }
-
         let userBody = JSON.parse(req.body.data)
         if (!isValidRequestBody(userBody)) {
             return res.status(400).send({ status: false, message: "Please provide data for successful registration" });
@@ -226,7 +230,6 @@ const checkUserupdate = async (req, res, next) => {
                 }
             }
         }
-
         const DuplicateEmail = await userModel.find({ email: email });
         const emailFound = DuplicateEmail.length;
         if (emailFound != 0) {
@@ -246,6 +249,10 @@ const checkUserupdate = async (req, res, next) => {
 
 const checkProduct = async (req, res, next) => {
     try {
+        let files = req.files
+        if (!files[0]) {
+            return res.status(400).send({ status: false, message: "Please Provide Product Image" })
+        }
         let myData = req.body.data
         if (!myData) {
             return res.status(400).send({ status: false, message: "Please provide data for successful response" });

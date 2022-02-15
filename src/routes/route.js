@@ -6,7 +6,7 @@ router.get('/test', (req, res) => {
     res.status(200).send({ status: true, message: "<h1> working properly </h1>" })
 })
 //---------------------------Project-5---------------------------//
-const AWSController = require('../controllers/aws');
+
 const cartController = require('../controllers/cartController');
 const orderController = require('../controllers/orderController');
 const productController = require('../controllers/productController');
@@ -14,7 +14,7 @@ const userController = require('../controllers/userController');
 const myMiddleware = require('../middleWares/middleWare');
 const validator = require('../validation/validation');
 
-router.post("/write-file-aws", AWSController.myAws) // 0 - post
+
 router.post('/register', validator.checkUser, userController.createUser) // 1 - post 
 router.post('/login', userController.userLogin) // 2 - post 
 router.get('/user/:userId/profile', myMiddleware.checkLogin, userController.getuserById) // 3 - get - protected
