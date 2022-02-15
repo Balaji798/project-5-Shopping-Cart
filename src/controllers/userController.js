@@ -80,12 +80,18 @@ const updateProfile = async (req, res) => {
         }
         let userBody = JSON.parse(req.body.data)
         let files = req.files
-        const profileImage = await aws.uploadFile(files[0])
+        let profileImage;
+        if (files[0]) {
+            profileImage = await aws.uploadFile(files[0])
+        }
         let { fname, lname, email, password, address } = userBody
-        const salt = await bcrypt.genSalt(10);
-        password = await bcrypt.hash(password, salt);
+
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            password = await bcrypt.hash(password, salt);
+        }
         let updateAddress = await userModel.findOne({ _id: userId })
-        if (!updateAddress) { 
+        if (!updateAddress) {
             return res.status(400).send({ status: false, message: "This userId does not exist" });;
         }
         updateAddress.address

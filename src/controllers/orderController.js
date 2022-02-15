@@ -23,7 +23,7 @@ const creatOrder = async (req, res) => {
         };
         let myOrder = { userId, items, totalPrice, totalItems, totalQuantity }
         let order = await orderModel.create(myOrder)
-        return res.status(201).send({ status: true, message: 'testing', data: order });
+        return res.status(201).send({ status: true, message: 'Order placed successfully', data: order });
     }
     catch (err) {
         res.status(500).send(err.message)
